@@ -50,4 +50,11 @@
 		delete from bucket where bucket_pk = #{bucket_pk};
 	</delete>
 	
+	<select id="bucket_one" resultType="BucketDto">
+		select * from bucket where bucket_pk = #{bucket_pk};
+	</select>
+	
+	<select id="bucket_user_pk" resultType="BucketDto">
+		select * from bucket where user_pk = #{user_pk};
+	</select>
 </mapper>

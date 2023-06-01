@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.mm.model.BucketDto;
 import com.ssafy.mm.model.Request_bucket_create_DTO;
 import com.ssafy.mm.model.service.BucketService;
-import com.ssafy.mm.model.service.JwtServiceImpl;
 
 @RestController
 @RequestMapping("/bucket")
@@ -63,6 +62,26 @@ public class BucketController {
 
 		try {
 			list = bucketService.bucket_spot_pk(spot_pk);
+			resultMap.put("BucketList", list);
+			resultMap.put("message", SUCCESS);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+			resultMap.put("message", FAIL);
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+	@GetMapping("byuser/{user_pk}")
+	public ResponseEntity<Map<String, Object>> bucket_user_pk(@PathVariable("user_pk") int user_pk) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = null;
+		List<BucketDto> list;
+
+		try {
+			list = bucketService.bucket_user_pk(user_pk);
 			resultMap.put("BucketList", list);
 			resultMap.put("message", SUCCESS);
 			status = HttpStatus.OK;
@@ -150,4 +169,24 @@ public class BucketController {
 
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
+	
+	// bucket_pk
+		@GetMapping("/bucket/{bucket_pk}")
+		public ResponseEntity<Map<String, Object>> bucket_pk(@PathVariable("bucket_pk") int bucket_pk) {
+			Map<String, Object> resultMap = new HashMap<>();
+			HttpStatus status = null;
+
+			try {
+				BucketDto dto = bucketService.bucket_one(bucket_pk);
+				resultMap.put("Bucket", dto);
+				resultMap.put("message", SUCCESS);
+				status = HttpStatus.OK;
+			} catch (Exception e) {
+				logger.error(e.getMessage());
+				resultMap.put("message", FAIL);
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+
+			return new ResponseEntity<Map<String, Object>>(resultMap, status);
+		}
 }

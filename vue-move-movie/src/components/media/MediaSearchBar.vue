@@ -15,6 +15,7 @@ import { mapState, mapActions, mapMutations } from "vuex";
 const mediaStore = "mediaStore";
 
 export default {
+    emits: ["msg"],
     name: "MediaSearchBar",
     data() {
         return {
@@ -48,10 +49,23 @@ export default {
             if (this.sidoCode) this.getGugun(this.sidoCode);
         },
         searchMedia() {
-            console.log("method실행" + this.gugunCode);
-            console.log(this.gugunCode);
-            console.log("================");
             if (this.gugunCode) this.getMediaList(this.gugunCode);
+
+            let data = {
+                gugunCode: this.gugunCode,
+                sidoCode: this.sidoCode,
+            };
+            this.$emit("msg", data);
+        },
+    },
+    watch: {
+        gugunCode() {
+            let data = {
+                gugunCode: this.gugunCode,
+                sidoCode: this.sidoCode,
+            };
+            this.$emit("msg", data);
+            // this.$emit("msg", this.sidoCode);
         },
     },
 };

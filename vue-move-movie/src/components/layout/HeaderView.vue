@@ -13,13 +13,18 @@
                     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
                     <b-collapse id="nav-collapse" is-nav>
                         <b-navbar-nav>
-                            <b-nav-item><router-link to="/media" class="nav-link p-md-0">영화 찾아보기</router-link></b-nav-item>
+                            <b-nav-item><router-link to="/media" class="nav-link p-md-0">타이틀 기반 검색</router-link></b-nav-item>
+                            <b-nav-item><router-link to="/media/list/location" class="nav-link p-md-0">주소 기반 검색</router-link></b-nav-item>
                             <b-nav-item><router-link to="/bucket" class="nav-link p-md-0">버킷 살펴보기</router-link></b-nav-item>
-                            <b-nav-item><router-link to="/notice" class="nav-link p-md-0">공지사항</router-link></b-nav-item>
+                            <!-- <b-nav-item><router-link to="/notice" class="nav-link p-md-0">공지사항</router-link></b-nav-item> -->
                         </b-navbar-nav>
                     </b-collapse>
+
                     <!-- 오른쪽 사이드바 버튼 -->
                     <b-collapse id="nav-collapse" class="justify-content-end d-none d-md-block" is-nav>
+                        <div class="pr-3 user-info-header" v-if="userInfo">
+                            <b>{{ userInfo.user_nickname }}님, 반가워요!</b>
+                        </div>
                         <b-icon-basket2-fill id="b-icon-basket2-fill" class="justify-content-end h2 pt-1 mr-3" v-b-toggle.sidebar-left></b-icon-basket2-fill>
                         <b-icon-person-square id="b-icon-person-square" class="justify-content-end h2 pt-1" v-b-toggle.sidebar-backdrop></b-icon-person-square>
                     </b-collapse>
@@ -31,6 +36,10 @@
 
 <script>
 import { throttle } from 'lodash';
+import { mapState } from 'vuex';
+
+const userStore = 'userStore';
+
 export default {
     name: 'HeaderView',
     components: {},
@@ -41,7 +50,9 @@ export default {
             scrollTop: 0, // 스크롤 위치 저장 변수
         };
     },
-
+    computed: {
+        ...mapState(userStore, ['userInfo']),
+    },
     mounted() {
         // 화면 전환시 이벤트 생성
         this.target = throttle(this.handleScroll, 1000); // 쓰로틀링 적용 (1초)
@@ -89,5 +100,11 @@ export default {
 .nav-link:hover {
     color: rgba(0, 0, 0, 0.9) !important;
     cursor: pointer;
+}
+
+@media (max-width: 900px) {
+    .user-info-header {
+        display: none;
+    }
 }
 </style>

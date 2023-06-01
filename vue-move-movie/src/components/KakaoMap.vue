@@ -19,23 +19,14 @@ export default {
         mediaSpotList: [],
     },
     watch: {
-        // mediaSpotList() {
-        //     console.log("충전소", this.mediaSpotList);
-        //     this.positions = [];
-        //     this.mediaSpotList.forEach((mediaSpot) => {
-        //         console.log("----------");
-        //         console.log(mediaSpot);
-        //         console.log("----------");
-        //         console.log(window.kakao.maps);
-        //         let obj = {};
-        //         obj.title = mediaSpot.spot_name;
-        //         obj.latlng = new kakao.maps.LatLng(mediaSpot.spot_lat, mediaSpot.spot_lon);
-        //         console.log("========obj");
-        //         console.log(obj);
-        //         this.positions.push(obj);
-        //     });
-        //     this.loadMaker();
-        // },
+        mediaSpotList: {
+            immediate: true,
+            handler() {
+                if (this.mediaSpotList.length != 0) {
+                    this.makeMediaSpotList();
+                }
+            },
+        },
     },
     created() {},
     mounted() {
@@ -65,7 +56,6 @@ export default {
             };
 
             this.map = new window.kakao.maps.Map(container, options);
-            this.makeMediaSpotList();
             // this.loadMaker();
         },
 
@@ -73,15 +63,15 @@ export default {
             console.log("충전소", this.mediaSpotList);
             this.positions = [];
             this.mediaSpotList.forEach((mediaSpot) => {
-                console.log("----------");
-                console.log(mediaSpot);
-                console.log("----------");
+                // console.log("----------");
+                // console.log(mediaSpot);
+                // console.log("----------");
                 console.log(window.kakao.maps);
                 let obj = {};
                 obj.title = mediaSpot.spot_name;
                 obj.latlng = new kakao.maps.LatLng(mediaSpot.spot_lat, mediaSpot.spot_lon);
-                console.log("========obj");
-                console.log(obj);
+                // console.log("========obj");
+                // console.log(obj);
 
                 this.positions.push(obj);
             });
@@ -111,7 +101,7 @@ export default {
                 });
                 this.markers.push(marker);
             });
-            console.log("마커수 ::: " + this.markers.length);
+            // console.log("마커수 ::: " + this.markers.length);
 
             // 4. 지도를 이동시켜주기
             // 배열.reduce( (누적값, 현재값, 인덱스, 요소)=>{ return 결과값}, 초기값);
@@ -120,7 +110,7 @@ export default {
             this.map.setBounds(bounds);
         },
         deleteMarker() {
-            console.log("마커 싹 지우자!!!", this.markers.length);
+            // console.log("마커 싹 지우자!!!", this.markers.length);
             if (this.markers.length > 0) {
                 this.markers.forEach((item) => {
                     console.log(item);

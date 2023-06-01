@@ -16,13 +16,16 @@ public interface BucketService {
 	public List<BucketDto> bucket_spot_pk(int spot_pk) throws Exception;
 
 	public List<BucketDto> bucket_order_heart() throws Exception;
+	
+	public List<BucketDto> bucket_user_pk(int user_pk) throws Exception;;
 
 	public void bucket_heart_plus(int bucket_pk) throws Exception;
 
 	public void bucket_create(Request_bucket_create_DTO bucket_info) throws Exception;
 
 	public void bucket_delete(int bucket_pk) throws Exception;
-
+	
+	public BucketDto bucket_one(int bucket_pk) throws Exception;
 	// 아직 구현 x
 //	public void bucket_modify(Map<String, String> map);
 }

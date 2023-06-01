@@ -8,9 +8,11 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ssafy.mm.model.SidoGugunCodeDto;
 import com.ssafy.mm.model.SpotDto;
+import com.ssafy.mm.model.SpotInstanceDto;
 import com.ssafy.mm.model.mapper.SpotMapper;
 
 @Service
@@ -25,8 +27,10 @@ public class SpotServiceImpl implements SpotService {
 	}
 
 	@Override
+	@Transactional
 	public List<SpotDto> find_title_spot(String spot_movie_title) throws Exception {
 		Map<String, String> map = new HashMap<String, String>();
+		System.out.println("들어오니");
 		map.put("spot_movie_title", spot_movie_title);
 //		System.out.println("map");
 //		System.out.println(map);
@@ -63,6 +67,17 @@ public class SpotServiceImpl implements SpotService {
 	@Override
 	public SpotDto spotOne(int spot_pk) throws Exception {
 		return sqlSession.getMapper(SpotMapper.class).spotOne(spot_pk);
+	}
+
+	@Override
+	public List<SpotInstanceDto> getSpotInstance(int spotNum) throws Exception {
+		return sqlSession.getMapper(SpotMapper.class).getSpotInstance(spotNum);
+	}
+
+	@Override
+	public void register(SpotDto spotDto) throws Exception {
+		sqlSession.getMapper(SpotMapper.class).register(spotDto);
+		
 	}
 	
 

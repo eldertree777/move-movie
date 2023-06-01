@@ -1,4 +1,4 @@
-import { movieInstance, apiInstance } from "@/api/index";
+import { movieInstance, apiInstance } from '@/api/index';
 
 const api = movieInstance();
 const localApi = apiInstance();
@@ -16,7 +16,6 @@ async function spotDetailList(params, success, fail) {
 }
 
 async function spotLocationList(coordinate, success, fail) {
-    console.log(coordinate);
     await api.post(`/spot/spot_area`, coordinate).then(success).catch(fail);
 }
 
@@ -33,8 +32,18 @@ function mediaLoctionList(params, success, fail) {
 }
 
 async function getMediaList(params, success, fail) {
-    await console.log("Helllo " + params);
     await localApi.get(`/spot/spot_area/${params}`).then(success).catch(fail);
 }
 
-export { mediaList, spotList, spotDetailList, spotLocationList, sidoList, gugunList, mediaLoctionList, getMediaList };
+// get spot instance
+async function getSpotInstance(params, success, fail) {
+    console.log(params);
+    await localApi.get(`/spot/spot_instance/${params}`).then(success).catch(fail);
+}
+
+async function register(spot, success, fail) {
+    console.log(spot);
+    await localApi.post(`/spot/register`, spot).then(success).catch(fail);
+}
+
+export { mediaList, spotList, spotDetailList, spotLocationList, sidoList, gugunList, mediaLoctionList, getMediaList, getSpotInstance, register };
