@@ -32,8 +32,8 @@ jobs:
         
     # Jar 파일 복사
     - name: Copy Jar
-      run: cp backend/target/*.jar deploy/
+      run: cp APIServerMoveMovie/target/*.jar deploy/
 
     - name: Make zip file
-      run: zip -r ./statrip.zip deploy/
+      run: zip -r ./movemovie.zip deploy/
       shell: bash
